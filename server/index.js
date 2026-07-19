@@ -21,7 +21,7 @@ const connectDB = async () => {
   }
   try {
     await mongoose.connect(MONGODB_URI, {
-      serverSelectionTimeoutMS: 5000 // fail fast if network issues
+      serverSelectionTimeoutMS: 30000 // Increased timeout for Vercel cold starts
     });
     console.log('Connected to MongoDB');
   } catch (error) {
