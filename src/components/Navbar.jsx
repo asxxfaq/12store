@@ -16,40 +16,30 @@ const Navbar = ({ onAddClick, isAdmin }) => {
           </Link>
         </div>
         
-        <div className="menu-icon" onClick={toggleMenu}>
-          <span style={{ transform: isMenuOpen ? 'rotate(-45deg) translate(-5px, 6px)' : 'none' }}></span>
-          <span style={{ opacity: isMenuOpen ? 0 : 1 }}></span>
-          <span style={{ transform: isMenuOpen ? 'rotate(45deg) translate(-5px, -6px)' : 'none' }}></span>
-        </div>
-
         <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
           <li><a href="#shoes" onClick={() => setIsMenuOpen(false)}>Shoes</a></li>
           <li><a href="#bags" onClick={() => setIsMenuOpen(false)}>Bags</a></li>
           <li><a href="#watches" onClick={() => setIsMenuOpen(false)}>Watches</a></li>
           <li><a href="#specs" onClick={() => setIsMenuOpen(false)}>Specs</a></li>
-          <li className="mobile-only">
-            {isAdmin ? (
-              <button className="btn-outline" onClick={() => { onAddClick(); setIsMenuOpen(false); }}>
-                Add Product
-              </button>
-            ) : (
-              <Link to="/admin" onClick={() => setIsMenuOpen(false)} style={{fontSize: '0.9rem', color: 'var(--accent-color)', fontWeight: 'bold'}}>
-                Admin Login
-              </Link>
-            )}
-          </li>
         </ul>
-        
-        <div className="desktop-only">
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           {isAdmin ? (
-            <button className="btn-outline" onClick={onAddClick}>
+            <button className="btn-outline btn-add-product" onClick={onAddClick}>
               Add Product
             </button>
           ) : (
-            <Link to="/admin" style={{fontSize: '0.8rem', color: 'var(--text-secondary)'}}>
-              Admin Login
-            </Link>
+            <div className="desktop-only">
+              <Link to="/admin" style={{fontSize: '0.8rem', color: 'var(--text-secondary)'}}>
+                Admin Login
+              </Link>
+            </div>
           )}
+          <div className="menu-icon" onClick={toggleMenu}>
+            <span style={{ transform: isMenuOpen ? 'rotate(-45deg) translate(-5px, 6px)' : 'none' }}></span>
+            <span style={{ opacity: isMenuOpen ? 0 : 1 }}></span>
+            <span style={{ transform: isMenuOpen ? 'rotate(45deg) translate(-5px, -6px)' : 'none' }}></span>
+          </div>
         </div>
       </div>
     </nav>
