@@ -9,7 +9,7 @@ const slides = [
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1614252235316-c146eaf8dff7?auto=format&fit=crop&q=80&w=1600',
+    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=1600',
     title: 'Premium Shoes',
     subtitle: 'Step into sophistication.'
   },

@@ -13,7 +13,7 @@ const collections = [
   },
   {
     id: 'shoes',
-    title: "Men's Footwear",
+    title: "Unisex Footwear",
     image: shoeImg,
     link: '#shoes'
   },
