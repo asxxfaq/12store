@@ -21,6 +21,13 @@ const Navbar = ({ onAddClick, isAdmin }) => {
           <li><a href="#bags" onClick={() => setIsMenuOpen(false)}>Bags</a></li>
           <li><a href="#watches" onClick={() => setIsMenuOpen(false)}>Watches</a></li>
           <li><a href="#specs" onClick={() => setIsMenuOpen(false)}>Specs</a></li>
+          {!isAdmin && (
+            <li className="mobile-only">
+              <Link to="/admin" onClick={() => setIsMenuOpen(false)} style={{fontSize: '0.9rem', color: 'var(--accent-color)', fontWeight: 'bold'}}>
+                Admin Login
+              </Link>
+            </li>
+          )}
         </ul>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
