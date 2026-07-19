@@ -19,9 +19,9 @@ const ProductCard = ({ product, onViewDetails, onEdit, onDelete, isAdmin }) => {
         <p style={styles.details}>{product.details}</p>
         <div style={styles.priceContainer}>
           {product.actualPrice && (
-            <span style={styles.actualPrice}>${parseFloat(product.actualPrice).toFixed(2)}</span>
+            <span style={styles.actualPrice}>₹{parseFloat(product.actualPrice).toFixed(2)}</span>
           )}
-          <span style={styles.price}>${parseFloat(product.price).toFixed(2)}</span>
+          <span style={styles.price}>₹{parseFloat(product.price).toFixed(2)}</span>
         </div>
       </div>
       

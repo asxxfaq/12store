@@ -1,6 +1,8 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import HeroSection from '../components/HeroSection';
+import FeaturedCollections from '../components/FeaturedCollections';
+import LookbookSection from '../components/LookbookSection';
 import CategorySection from '../components/CategorySection';
 import ProductDetailsModal from '../components/ProductDetailsModal';
 
@@ -16,6 +18,8 @@ const CustomerStore = ({ products, currentProduct, isDetailsModalOpen, openDetai
       
       <main>
         <HeroSection />
+        <FeaturedCollections />
+        <LookbookSection />
         
         <CategorySection 
           id="shoes" 
@@ -50,8 +54,21 @@ const CustomerStore = ({ products, currentProduct, isDetailsModalOpen, openDetai
       <footer style={styles.footer}>
         <div className="container" style={styles.footerContent}>
           <div style={styles.logo}>
-            <span className="gold-text">12</span>STORE
+            <span className="gold-text">12</span><span style={{ color: '#fff' }}>STORE</span>
           </div>
+          
+          <div style={styles.orderingInfo}>
+            <h4 style={styles.footerHeading}>How to Order</h4>
+            <p style={styles.footerText}>Found something you love? Ordering is simple and personal.</p>
+            <div style={styles.instaBox}>
+              <span style={styles.instaIcon}>📸</span> 
+              <span>Take a screenshot and <strong>DM us on Instagram</strong> to place your order!</span>
+            </div>
+            <a href="https://instagram.com/12store.in" target="_blank" rel="noopener noreferrer" style={styles.instaLink}>
+              @12store.in
+            </a>
+          </div>
+
           <p style={styles.copyright}>&copy; {new Date().getFullYear()} 12Store.in. Crafted with elegance.</p>
         </div>
       </footer>
@@ -67,27 +84,74 @@ const CustomerStore = ({ products, currentProduct, isDetailsModalOpen, openDetai
 
 const styles = {
   footer: {
-    backgroundColor: '#FDFBF7',
-    padding: '3rem 0',
-    borderTop: '1px solid var(--border-color)',
+    backgroundColor: 'var(--accent-color)',
+    color: '#ffffff',
+    padding: '4rem 0 2rem 0',
     marginTop: 'auto',
   },
   footerContent: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    gap: '1rem',
+    gap: '2rem',
+    textAlign: 'center'
   },
   logo: {
     fontFamily: 'var(--font-heading)',
-    fontSize: '1.5rem',
+    fontSize: '2rem',
     fontWeight: '700',
     letterSpacing: '2px',
-    color: 'var(--accent-color)'
+  },
+  orderingInfo: {
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    padding: '2rem',
+    borderRadius: '4px',
+    border: '1px solid rgba(212, 175, 55, 0.2)',
+    maxWidth: '500px',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '1rem',
+    alignItems: 'center'
+  },
+  footerHeading: {
+    color: 'var(--gold-color)',
+    fontSize: '1.2rem',
+    marginBottom: '0',
+    letterSpacing: '1px'
+  },
+  footerText: {
+    color: '#e0e0e0',
+    fontSize: '0.95rem'
+  },
+  instaBox: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+    backgroundColor: '#ffffff',
+    color: 'var(--accent-color)',
+    padding: '12px 20px',
+    borderRadius: '4px',
+    fontSize: '0.9rem',
+    fontWeight: '500'
+  },
+  instaIcon: {
+    fontSize: '1.2rem'
+  },
+  instaLink: {
+    color: 'var(--gold-color)',
+    textDecoration: 'underline',
+    fontWeight: '600',
+    marginTop: '0.5rem',
+    letterSpacing: '1px'
   },
   copyright: {
-    color: 'var(--text-secondary)',
-    fontSize: '0.9rem',
+    color: 'rgba(255, 255, 255, 0.5)',
+    fontSize: '0.85rem',
+    marginTop: '2rem',
+    borderTop: '1px solid rgba(255,255,255,0.1)',
+    width: '100%',
+    paddingTop: '2rem'
   }
 };
 

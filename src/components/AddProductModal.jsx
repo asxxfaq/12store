@@ -79,7 +79,7 @@ const AddProductModal = ({ isOpen, onClose, onSaveProduct, initialData }) => {
           </div>
           
           <div className="form-group">
-            <label>Price ($)</label>
+            <label>Price (₹)</label>
             <input 
               type="number" 
               name="price" 
@@ -93,7 +93,7 @@ const AddProductModal = ({ isOpen, onClose, onSaveProduct, initialData }) => {
           </div>
           
           <div className="form-group">
-            <label>Actual Price ($)</label>
+            <label>Actual Price (₹)</label>
             <input 
               type="number" 
               name="actualPrice" 

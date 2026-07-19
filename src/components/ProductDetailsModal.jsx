@@ -5,7 +5,7 @@ const ProductDetailsModal = ({ isOpen, onClose, product }) => {
 
   const handleBuyClick = () => {
     // Redirect to Instagram DM
-    const message = encodeURIComponent(`Hi, I'm interested in buying the ${product.name} for $${product.price}.`);
+    const message = encodeURIComponent(`Hi, I'm interested in buying the ${product.name} for ₹${product.price}.`);
     window.open(`https://ig.me/m/12store.in?text=${message}`, '_blank');
   };
 
@@ -28,9 +28,9 @@ const ProductDetailsModal = ({ isOpen, onClose, product }) => {
             <h2 style={styles.title}>{product.name}</h2>
             <div style={styles.priceContainer}>
               {product.actualPrice && (
-                <span style={styles.actualPrice}>${parseFloat(product.actualPrice).toFixed(2)}</span>
+                <span style={styles.actualPrice}>₹{parseFloat(product.actualPrice).toFixed(2)}</span>
               )}
-              <span style={styles.price}>${parseFloat(product.price).toFixed(2)}</span>
+              <span style={styles.price}>₹{parseFloat(product.price).toFixed(2)}</span>
             </div>
             
             <div style={styles.divider}></div>

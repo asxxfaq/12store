@@ -297,6 +297,195 @@ textarea.form-control {
   letter-spacing: 1px; 
 }
 
+/* Tanishq Luxury Featured Collections */
+.tanishq-section {
+  padding: 6rem 0;
+  background-color: var(--primary-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tanishq-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+.tanishq-card {
+  position: relative;
+  height: 400px;
+  display: block;
+  overflow: hidden;
+  text-decoration: none;
+  background-color: #000;
+  border-radius: 2px;
+}
+
+.tanishq-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0.85;
+}
+
+.tanishq-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2.5rem;
+  z-index: 2;
+}
+
+.tanishq-border {
+  position: absolute;
+  inset: 15px;
+  border: 1px solid rgba(212, 175, 55, 0.3); /* Thin gold border */
+  z-index: 3;
+  pointer-events: none;
+  transition: all 0.5s ease;
+}
+
+.tanishq-title {
+  color: #FFFFFF;
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+  transform: translateY(10px);
+  transition: transform 0.4s ease;
+}
+
+.tanishq-action {
+  color: var(--gold-color);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.4s ease;
+}
+
+/* Hover Effects */
+.tanishq-card:hover .tanishq-image {
+  transform: scale(1.08);
+  opacity: 0.7;
+}
+
+.tanishq-card:hover .tanishq-border {
+  inset: 20px;
+  border-color: rgba(212, 175, 55, 0.8);
+}
+
+.tanishq-card:hover .tanishq-title {
+  transform: translateY(0);
+}
+
+.tanishq-card:hover .tanishq-action {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Tanishq Lookbook Section */
+.lookbook-section {
+  padding: 6rem 0;
+  background-color: var(--primary-color);
+}
+
+.lookbook-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  height: 600px;
+}
+
+.lookbook-main {
+  height: 100%;
+}
+
+.lookbook-sub-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 2rem;
+  height: 100%;
+}
+
+.lookbook-item {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background-color: #000;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.lookbook-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 1s ease;
+  opacity: 0.8;
+}
+
+.lookbook-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem;
+  z-index: 2;
+}
+
+.lookbook-title {
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+  transform: translateY(15px);
+  transition: transform 0.4s ease;
+}
+
+.lookbook-main .lookbook-title {
+  font-size: 2.5rem;
+}
+
+.lookbook-action {
+  color: var(--gold-color);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: all 0.4s ease;
+}
+
+.lookbook-item:hover .lookbook-image {
+  transform: scale(1.05);
+  opacity: 0.6;
+}
+
+.lookbook-item:hover .lookbook-title,
+.lookbook-item:hover .lookbook-action {
+  transform: translateY(0);
+  opacity: 1;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .section-title { font-size: 2rem; }
@@ -337,6 +526,21 @@ textarea.form-control {
     margin-top: 2rem;
     text-align: center;
   }
+  
+  .tanishq-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .lookbook-grid {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .lookbook-main {
+    height: 400px;
+  }
+  .lookbook-sub-grid {
+    height: 600px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -346,5 +550,31 @@ textarea.form-control {
   .btn-primary {
     padding: 10px 20px;
     font-size: 0.85rem;
+  }
+
+  .tanishq-grid {
+    gap: 1rem;
+    padding: 0 0.5rem;
+  }
+  
+  .tanishq-card {
+    height: 250px;
+  }
+  
+  .tanishq-title {
+    font-size: 1.2rem;
+  }
+  
+  .tanishq-action {
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+  }
+
+  .lookbook-sub-grid {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .lookbook-sub-grid .lookbook-item {
+    height: 300px;
   }
 }

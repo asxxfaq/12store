@@ -1,4 +1,5 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -12,6 +13,7 @@ app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 
 // Database Connection
+console.log("Environment MONGODB_URI is:", process.env.MONGODB_URI);
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/12thstore';
 mongoose.connect(MONGODB_URI)
   .then(() => console.log('Connected to MongoDB'))
