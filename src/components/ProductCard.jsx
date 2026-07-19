@@ -26,7 +26,7 @@ const ProductCard = ({ product, onViewDetails, onEdit, onDelete, isAdmin }) => {
       </div>
       
       {isAdmin && (
-        <div style={styles.actions}>
+        <div className="product-actions">
           <button className="btn-secondary" onClick={() => onEdit(product)}>Edit</button>
           <button className="btn-danger" onClick={() => onDelete(product.id)}>Delete</button>
         </div>
@@ -72,14 +72,6 @@ const styles = {
     justifyContent: 'center',
     opacity: 0,
     transition: 'opacity 0.3s ease',
-  },
-
-  actions: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    padding: '1rem 1.5rem',
-    borderTop: '1px solid var(--border-color)',
-    backgroundColor: '#FAFAFA',
   }
 };
 
