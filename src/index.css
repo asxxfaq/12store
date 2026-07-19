@@ -175,9 +175,12 @@ button {
   max-width: 500px;
   max-height: 90vh;
   overflow-y: auto;
+  overflow-x: hidden;
   position: relative;
   box-shadow: 0 20px 40px rgba(0,0,0,0.1);
   animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .modal-content.large {
@@ -584,7 +587,10 @@ textarea.form-control {
 /* Responsive Design */
 @media (max-width: 768px) {
   .section-title { font-size: 2rem; }
-  .modal-content { padding: 1.5rem; }
+  .modal-content { 
+    padding: 1.5rem; 
+    width: 95%;
+  }
   
   .hero-title { font-size: 3rem; letter-spacing: 2px; }
   .hero-subtitle { font-size: 1rem; padding: 0 1rem; }
@@ -661,6 +667,10 @@ textarea.form-control {
 @media (max-width: 480px) {
   .hero-title { font-size: 2.2rem; }
   .section-title { font-size: 1.5rem; }
+  
+  .modal-content {
+    padding: 1.25rem;
+  }
   
   .btn-primary {
     padding: 10px 20px;

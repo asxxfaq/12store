@@ -131,7 +131,7 @@ const AddProductModal = ({ isOpen, onClose, onSaveProduct, initialData }) => {
             />
             {formData.image && (
               <div style={{marginTop: '10px'}}>
-                <img src={formData.image} alt="Preview" style={{maxHeight: '100px', borderRadius: '4px', border: '1px solid var(--border-color)'}} />
+                <img src={formData.image} alt="Preview" style={{maxWidth: '100%', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid var(--border-color)'}} />
               </div>
             )}
           </div>
