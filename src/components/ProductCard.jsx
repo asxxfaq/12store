@@ -14,14 +14,14 @@ const ProductCard = ({ product, onViewDetails, onEdit, onDelete, isAdmin }) => {
         </div>
       </div>
       
-      <div style={styles.info}>
-        <h3 style={styles.name} onClick={() => onViewDetails(product)}>{product.name}</h3>
-        <p style={styles.details}>{product.details}</p>
-        <div style={styles.priceContainer}>
+      <div className="product-info">
+        <h3 className="product-name" onClick={() => onViewDetails(product)}>{product.name}</h3>
+        <p className="product-details">{product.details}</p>
+        <div className="product-price-container">
           {product.actualPrice && (
-            <span style={styles.actualPrice}>₹{parseFloat(product.actualPrice).toFixed(2)}</span>
+            <span className="product-actual-price">₹{parseFloat(product.actualPrice).toFixed(2)}</span>
           )}
-          <span style={styles.price}>₹{parseFloat(product.price).toFixed(2)}</span>
+          <span className="product-price">₹{parseFloat(product.price).toFixed(2)}</span>
         </div>
       </div>
       
@@ -73,44 +73,7 @@ const styles = {
     opacity: 0,
     transition: 'opacity 0.3s ease',
   },
-  info: {
-    padding: '1.5rem',
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-  },
-  name: {
-    fontSize: '1.2rem',
-    marginBottom: '0.5rem',
-    fontFamily: 'var(--font-heading)',
-    cursor: 'pointer',
-    color: 'var(--accent-color)',
-  },
-  details: {
-    fontSize: '0.85rem',
-    color: 'var(--text-secondary)',
-    marginBottom: '1rem',
-    flexGrow: 1,
-    display: '-webkit-box',
-    WebkitLineClamp: 2,
-    WebkitBoxOrient: 'vertical',
-    overflow: 'hidden',
-  },
-  priceContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '0.75rem',
-  },
-  price: {
-    fontSize: '1.2rem',
-    fontWeight: '600',
-    color: 'var(--gold-color)',
-  },
-  actualPrice: {
-    fontSize: '1rem',
-    color: 'var(--text-secondary)',
-    textDecoration: 'line-through',
-  },
+
   actions: {
     display: 'flex',
     justifyContent: 'space-between',
