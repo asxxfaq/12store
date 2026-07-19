@@ -523,6 +523,7 @@ textarea.form-control {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .product-price {
