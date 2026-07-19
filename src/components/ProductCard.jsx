@@ -5,7 +5,7 @@ const ProductCard = ({ product, onViewDetails, onEdit, onDelete, isAdmin }) => {
     <div style={styles.card}>
       <div style={styles.imageContainer} onClick={() => onViewDetails(product)}>
         <img 
-          src={product.image || "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80"} 
+          src={(product.images && product.images.length > 0 ? product.images[0] : product.image) || "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80"} 
           alt={product.name} 
           style={styles.image} 
         />

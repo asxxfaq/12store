@@ -7,12 +7,13 @@ const AddProductModal = ({ isOpen, onClose, onSaveProduct, initialData }) => {
     actualPrice: '',
     category: 'shoes',
     image: '',
+    images: [],
     details: ''
   });
 
   useEffect(() => {
     if (initialData) {
-      setFormData(initialData);
+      setFormData({ ...initialData, images: initialData.images || [] });
     } else {
       setFormData({
         name: '',
@@ -20,6 +21,7 @@ const AddProductModal = ({ isOpen, onClose, onSaveProduct, initialData }) => {
         actualPrice: '',
         category: 'shoes',
         image: '',
+        images: [],
         details: ''
       });
     }
@@ -32,14 +34,28 @@ const AddProductModal = ({ isOpen, onClose, onSaveProduct, initialData }) => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData(prev => ({ ...prev, image: reader.result }));
+  const handleImageUpload = async (e) => {
+    const files = Array.from(e.target.files).slice(0, 3);
+    if (files.length > 0) {
+      const readAsDataURL = (file) => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
       };
-      reader.readAsDataURL(file);
+
+      try {
+        const base64Images = await Promise.all(files.map(readAsDataURL));
+        setFormData(prev => ({ 
+          ...prev, 
+          images: base64Images,
+          image: base64Images[0] 
+        }));
+      } catch (error) {
+        console.error("Error reading files:", error);
+      }
     }
   };
 
@@ -121,19 +137,24 @@ const AddProductModal = ({ isOpen, onClose, onSaveProduct, initialData }) => {
           </div>
           
           <div className="form-group">
-            <label>Product Image</label>
+            <label>Product Images (Up to 3)</label>
             <input 
               type="file" 
               accept="image/*"
+              multiple
               className="form-control" 
               onChange={handleImageUpload}
               style={{ padding: '9px' }}
             />
-            {formData.image && (
-              <div style={{marginTop: '10px'}}>
+            <div style={{marginTop: '10px', display: 'flex', gap: '10px', flexWrap: 'wrap'}}>
+              {formData.images && formData.images.length > 0 ? (
+                formData.images.map((imgSrc, idx) => (
+                  <img key={idx} src={imgSrc} alt={`Preview ${idx + 1}`} style={{maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid var(--border-color)'}} />
+                ))
+              ) : formData.image && (
                 <img src={formData.image} alt="Preview" style={{maxWidth: '100%', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid var(--border-color)'}} />
-              </div>
-            )}
+              )}
+            </div>
           </div>
           
           <div className="form-group">

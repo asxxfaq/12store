@@ -1,6 +1,14 @@
 import React from 'react';
 
 const ProductDetailsModal = ({ isOpen, onClose, product }) => {
+  const [mainImage, setMainImage] = React.useState('');
+
+  React.useEffect(() => {
+    if (product) {
+      setMainImage((product.images && product.images.length > 0 ? product.images[0] : product.image) || "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80");
+    }
+  }, [product]);
+
   if (!isOpen || !product) return null;
 
   const handleBuyClick = () => {
@@ -17,10 +25,26 @@ const ProductDetailsModal = ({ isOpen, onClose, product }) => {
         <div style={styles.container}>
           <div style={styles.imageCol}>
             <img 
-              src={product.image || "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80"} 
+              src={mainImage} 
               alt={product.name} 
               style={styles.image} 
             />
+            {product.images && product.images.length > 1 && (
+              <div style={styles.thumbnailContainer}>
+                {product.images.map((img, idx) => (
+                  <img 
+                    key={idx}
+                    src={img}
+                    alt={`${product.name} view ${idx + 1}`}
+                    style={{
+                      ...styles.thumbnail,
+                      border: mainImage === img ? '2px solid var(--gold-color)' : '1px solid var(--border-color)'
+                    }}
+                    onClick={() => setMainImage(img)}
+                  />
+                ))}
+              </div>
+            )}
           </div>
           
           <div style={styles.infoCol}>
@@ -60,9 +84,25 @@ const styles = {
   },
   image: {
     width: '100%',
-    height: '100%',
+    height: 'auto',
+    maxHeight: '400px',
     objectFit: 'cover',
     borderRadius: '4px',
+  },
+  thumbnailContainer: {
+    display: 'flex',
+    gap: '10px',
+    marginTop: '15px',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+  },
+  thumbnail: {
+    width: '60px',
+    height: '60px',
+    objectFit: 'cover',
+    cursor: 'pointer',
+    borderRadius: '4px',
+    transition: 'border 0.3s ease',
   },
   infoCol: {
     flex: '1 1 300px',
