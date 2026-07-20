@@ -42,11 +42,22 @@ app.use('/api', async (req, res, next) => {
 
 // API Routes
 
-// Get all products
+// Get all products (lightweight for lists)
 app.get('/api/products', async (req, res) => {
   try {
-    const products = await Product.find().sort({ createdAt: -1 });
+    const products = await Product.find().select('-images -details').sort({ createdAt: -1 });
     res.json(products);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Get a single product (with full details and all images)
+app.get('/api/products/:id', async (req, res) => {
+  try {
+    const product = await Product.findOne({ id: req.params.id });
+    if (!product) return res.status(404).json({ message: 'Product not found' });
+    res.json(product);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

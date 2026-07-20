@@ -2,18 +2,39 @@ import React from 'react';
 
 const ProductDetailsModal = ({ isOpen, onClose, product }) => {
   const [mainImage, setMainImage] = React.useState('');
+  const [fullProduct, setFullProduct] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
-    if (product) {
-      setMainImage((product.images && product.images.length > 0 ? product.images[0] : product.image) || "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80");
+    if (product && isOpen) {
+      setMainImage(product.image || "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80");
+      setFullProduct(product); // initial fallback
+      
+      const fetchFull = async () => {
+        setIsLoading(true);
+        try {
+          const res = await fetch(`/api/products/${product.id}`);
+          if (res.ok) {
+            const data = await res.json();
+            setFullProduct(data);
+            setMainImage((data.images && data.images.length > 0 ? data.images[0] : data.image) || "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80");
+          }
+        } catch (e) {
+          console.error("Error fetching full product", e);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      fetchFull();
     }
-  }, [product]);
+  }, [product, isOpen]);
 
   if (!isOpen || !product) return null;
 
+  const displayProduct = fullProduct || product;
+
   const handleBuyClick = () => {
-    // Redirect to Instagram DM
-    const message = encodeURIComponent(`Hi, I'm interested in buying the ${product.name} for ₹${product.price}.`);
+    const message = encodeURIComponent(`Hi, I'm interested in buying the ${displayProduct.name} for ₹${displayProduct.price}.`);
     window.open(`https://ig.me/m/12store.in?text=${message}`, '_blank');
   };
 
@@ -22,45 +43,48 @@ const ProductDetailsModal = ({ isOpen, onClose, product }) => {
       <div className="modal-content large" onClick={e => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose}>&times;</button>
         
-        <div style={styles.container}>
-          <div style={styles.imageCol}>
-            <img 
-              src={mainImage} 
-              alt={product.name} 
-              style={styles.image} 
-            />
-            {product.images && product.images.length > 1 && (
-              <div style={styles.thumbnailContainer}>
-                {product.images.map((img, idx) => (
-                  <img 
-                    key={idx}
-                    src={img}
-                    alt={`${product.name} view ${idx + 1}`}
-                    style={{
-                      ...styles.thumbnail,
-                      border: mainImage === img ? '2px solid var(--gold-color)' : '1px solid var(--border-color)'
-                    }}
-                    onClick={() => setMainImage(img)}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
+        {isLoading && !fullProduct?.images ? (
+          <div style={{padding: '3rem', textAlign: 'center'}}>Loading details...</div>
+        ) : (
+          <div style={styles.container}>
+            <div style={styles.imageCol}>
+              <img 
+                src={mainImage} 
+                alt={displayProduct.name} 
+                style={styles.image} 
+              />
+              {displayProduct.images && displayProduct.images.length > 1 && (
+                <div style={styles.thumbnailContainer}>
+                  {displayProduct.images.map((img, idx) => (
+                    <img 
+                      key={idx}
+                      src={img}
+                      alt={`${displayProduct.name} view ${idx + 1}`}
+                      style={{
+                        ...styles.thumbnail,
+                        border: mainImage === img ? '2px solid var(--gold-color)' : '1px solid var(--border-color)'
+                      }}
+                      onClick={() => setMainImage(img)}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
           
           <div style={styles.infoCol}>
-            <p style={styles.category}>{product.category}</p>
-            <h2 style={styles.title}>{product.name}</h2>
+            <p style={styles.category}>{displayProduct.category}</p>
+            <h2 style={styles.title}>{displayProduct.name}</h2>
             <div style={styles.priceContainer}>
-              {product.actualPrice && (
-                <span style={styles.actualPrice}>₹{parseFloat(product.actualPrice).toFixed(2)}</span>
+              {displayProduct.actualPrice && (
+                <span style={styles.actualPrice}>₹{parseFloat(displayProduct.actualPrice).toFixed(2)}</span>
               )}
-              <span style={styles.price}>₹{parseFloat(product.price).toFixed(2)}</span>
+              <span style={styles.price}>₹{parseFloat(displayProduct.price).toFixed(2)}</span>
             </div>
             
             <div style={styles.divider}></div>
             
             <h4 style={{fontFamily: 'var(--font-heading)', marginBottom: '0.5rem'}}>Product Details</h4>
-            <p style={styles.details}>{product.details || "No details available for this product."}</p>
+            <p style={styles.details}>{displayProduct.details || "No details available for this product."}</p>
             
             <button className="btn-primary" style={{marginTop: '2rem', width: '100%'}} onClick={handleBuyClick}>
               Buy on Instagram

@@ -37,24 +37,52 @@ const AddProductModal = ({ isOpen, onClose, onSaveProduct, initialData }) => {
   const handleImageUpload = async (e) => {
     const files = Array.from(e.target.files).slice(0, 3);
     if (files.length > 0) {
-      const readAsDataURL = (file) => {
+      const compressImage = (file) => {
         return new Promise((resolve, reject) => {
           const reader = new FileReader();
-          reader.onload = () => resolve(reader.result);
+          reader.onload = (event) => {
+            const img = new Image();
+            img.onload = () => {
+              const canvas = document.createElement('canvas');
+              let width = img.width;
+              let height = img.height;
+              const max_size = 800;
+
+              if (width > height) {
+                if (width > max_size) {
+                  height *= max_size / width;
+                  width = max_size;
+                }
+              } else {
+                if (height > max_size) {
+                  width *= max_size / height;
+                  height = max_size;
+                }
+              }
+              canvas.width = width;
+              canvas.height = height;
+              const ctx = canvas.getContext('2d');
+              ctx.drawImage(img, 0, 0, width, height);
+              const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+              resolve(dataUrl);
+            };
+            img.onerror = reject;
+            img.src = event.target.result;
+          };
           reader.onerror = reject;
           reader.readAsDataURL(file);
         });
       };
 
       try {
-        const base64Images = await Promise.all(files.map(readAsDataURL));
+        const base64Images = await Promise.all(files.map(compressImage));
         setFormData(prev => ({ 
           ...prev, 
           images: base64Images,
           image: base64Images[0] 
         }));
       } catch (error) {
-        console.error("Error reading files:", error);
+        console.error("Error compressing files:", error);
       }
     }
   };
