@@ -45,7 +45,7 @@ app.use('/api', async (req, res, next) => {
 // Get all products (lightweight for lists)
 app.get('/api/products', async (req, res) => {
   try {
-    const products = await Product.find().select('-images -details').sort({ createdAt: -1 });
+    const products = await Product.find().select('-image -images -details').sort({ createdAt: -1 });
     res.json(products);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -58,6 +58,36 @@ app.get('/api/products/:id', async (req, res) => {
     const product = await Product.findOne({ id: req.params.id });
     if (!product) return res.status(404).json({ message: 'Product not found' });
     res.json(product);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Serve primary image as a streamable file
+app.get('/api/products/:id/image', async (req, res) => {
+  try {
+    const product = await Product.findOne({ id: req.params.id }).select('image images');
+    if (!product) return res.status(404).json({ message: 'Product not found' });
+    
+    const base64Str = product.image || (product.images && product.images.length > 0 ? product.images[0] : null);
+    
+    if (!base64Str) {
+      return res.redirect('https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80');
+    }
+
+    const matches = base64Str.match(/^data:image\/([A-Za-z-+\/]+);base64,(.+)$/);
+    if (matches && matches.length === 3) {
+      const type = matches[1];
+      const buffer = Buffer.from(matches[2], 'base64');
+      res.writeHead(200, {
+        'Content-Type': `image/${type}`,
+        'Content-Length': buffer.length,
+        'Cache-Control': 'public, max-age=86400'
+      });
+      res.end(buffer);
+    } else {
+      res.status(500).json({ message: 'Invalid image format' });
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

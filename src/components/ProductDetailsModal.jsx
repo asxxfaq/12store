@@ -7,7 +7,7 @@ const ProductDetailsModal = ({ isOpen, onClose, product }) => {
 
   React.useEffect(() => {
     if (product && isOpen) {
-      setMainImage(product.image || "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80");
+      setMainImage(`/api/products/${product.id}/image`);
       setFullProduct(product); // initial fallback
       
       const fetchFull = async () => {
